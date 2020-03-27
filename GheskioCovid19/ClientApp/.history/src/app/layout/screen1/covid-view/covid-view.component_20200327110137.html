@@ -1,0 +1,78 @@
+  <div class="row" style="margin: 10px 0;">
+    <div class="col-sm-4">
+      <button (click)="refresh()" class="btn btn-primary"
+        matTooltip="Rechercher si un patient a deja un dossier Covid-19">
+        Refresh
+      </button>
+    </div>
+  </div>
+
+<div class="mat-elevation-z8">
+
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="NIHID">
+      <th mat-header-cell *matHeaderCellDef>NIHID</th>
+      <td mat-cell *matCellDef="let element"> {{element.patNetId}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="SITE">
+      <th mat-header-cell *matHeaderCellDef>SITE</th>
+      <td mat-cell *matCellDef="let element"> {{element.site}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PATIENT">
+      <th mat-header-cell *matHeaderCellDef>PATIENT</th>
+      <td mat-cell *matCellDef="let element"> {{element.firstname + ' ' + element.lastname}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="DATE_VISITE">
+      <th mat-header-cell *matHeaderCellDef>Date Visite</th>
+      <td mat-cell *matCellDef="let element"> {{element.dateVisite}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="DATE_RETOUR">
+      <th mat-header-cell *matHeaderCellDef>Date Retour</th>
+      <td mat-cell *matCellDef="let element"> {{element.dateRetour}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="INIT_AGENT">
+      <th mat-header-cell *matHeaderCellDef>Initial Agent</th>
+      <td mat-cell *matCellDef="let element"> {{element.initialAgent}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ACTIONS">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Action Menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="toUpdate(element)">
+            <mat-icon>update</mat-icon>
+            <span>Editer</span>
+          </button>
+          <button mat-menu-item (click)="toPrint()">
+            <mat-icon>local_printshop</mat-icon>
+            <span>Imprimer</span>
+          </button>
+          <button mat-menu-item (click)="toDelete()">
+            <mat-icon>delete</mat-icon>
+            <span>Supprimer</span>
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

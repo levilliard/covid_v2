@@ -1,0 +1,763 @@
+
+<div style="border: solid 1px #eee; margin: 5px; padding: 5px;">
+    <h2>Mise a jour <span class="badge badge-light"></span></h2>
+  </div>
+  
+  <mat-horizontal-stepper labelPosition="bottom" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel><span style="text-transform: uppercase;">Niveau 1: Agent d’accueil</span> </ng-template>
+         
+        <tr>
+          <td>
+            <mat-form-field>
+              <mat-label>PAT NET ID</mat-label>
+              <input matInput placeholder="" formControlName="nihid" (blur)="findPatient()">
+            </mat-form-field>
+          </td>
+  
+          <td>
+            <mat-form-field>
+              <mat-label>Site</mat-label>
+              <input matInput placeholder="" formControlName="site" readonly>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label>No GHESKIO IRA</mat-label>
+              <input matInput placeholder="" formControlName="gheskioIra" required>
+            </mat-form-field>
+          </td>
+        </tr>
+  
+        <tr>
+          <td>
+            <mat-form-field>
+              <mat-label>Nom</mat-label>
+              <input matInput placeholder="" formControlName="firstname" readonly>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label>Prenom</mat-label>
+              <input matInput placeholder="" formControlName="lastname" readonly>
+            </mat-form-field>
+          </td>
+        </tr>
+  
+        <tr>
+          <td>
+            <mat-form-field>
+              <mat-label>Date Naissance</mat-label>
+              <input matInput placeholder="" formControlName="dateNaiss" readonly>
+            </mat-form-field>
+          </td>
+  
+          <td>
+            <mat-form-field>
+              <mat-label>Telephone</mat-label>
+              <input matInput placeholder="" formControlName="tel" readonly>
+            </mat-form-field>
+          </td>
+        </tr>
+  
+        <tr>
+          <td>
+            <mat-form-field>
+              <mat-label>Age</mat-label>
+              <input type="number" matInput placeholder="" formControlName="age" readonly>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label>Sexe</mat-label>
+              <input matInput placeholder="" formControlName="sexe" readonly>
+            </mat-form-field>
+          </td>
+        </tr>
+  
+        <tr>
+          <td>
+            <p>
+              <mat-label>Avez-vous voyagé à l’étranger au cours des 14 derniers jours ?</mat-label>
+              <mat-checkbox class="mcheck" formControlName="q1" placeholder=""></mat-checkbox>
+            </p>
+            <p>
+              <mat-label>Si Oui, Ou ? </mat-label>
+              <input matInput placeholder="Position" formControlName="symptomePosition">
+            </p>
+          </td>
+        </tr>
+  
+        <tr>
+          <td>
+            <mat-label>
+              D’autres membres du ménage présentent-ils également une symptomatologie respiratoire ?</mat-label>
+          </td>
+          <td>
+            <mat-checkbox class="mcheck" formControlName="q4" placeholder=""></mat-checkbox>
+          </td>
+        </tr>
+  
+        <tr>
+  
+          <td>
+  
+            <mat-form-field>
+              <mat-label>Date Retour</mat-label>
+              <input matInput [matDatepicker]="picker"  formControlName="dateRetour">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+  
+          </td>
+        </tr>
+        <div>
+          <div class="row">
+            <div class="col-sm-4">
+              <button mat-raised-button mat-button color="warn" matStepperNext style="margin-right: 40px;">Suivant</button>
+              <button [disabled]="!firstFormGroup.valid" (click)="save(stepper)" mat-raised-button mat-button color="primary"
+              style="margin-left: 10px;">Sauvegarder</button>
+
+              </div>
+
+              <div class="col-sm-2"></div>
+
+              <div class="col-sm-4">
+                <button  (click)="onNoClick()" mat-button color="primary" style="margin-left: 10px;">Fermer</button>
+              </div>
+            </div>
+        </div>
+      </form>
+    </mat-step>
+  
+    <mat-step [stepControl]="_firstFormGroup">
+      <form [formGroup]="_firstFormGroup">
+        <ng-template matStepLabel> <span style="text-transform: uppercase;">Niveau 1: Signes/symptômes du patient</span>
+        </ng-template>
+  
+        <div class="row">
+          <!-- <div class="col-sm-6">    
+              <tr>
+                <td>
+                    <br/>
+                    <mat-label>Avez-vous été en contact avec quelqu’un qui a voyagé au cours des 14 derniers jours ?</mat-label>
+                    <mat-checkbox class="mcheck" type="checkbox" formControlName="q2" placeholder="" ></mat-checkbox>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <br/>
+                    <mat-label>Avez-vous voyagé à l’étranger au cours des 14 derniers jours ?</mat-label>
+                    <mat-checkbox class="mcheck" formControlName="q3" placeholder="" ></mat-checkbox>
+                </td>
+              </tr>
+             </div> -->
+  
+          <div class="col-sm-6">
+            <tr>
+              <td>
+                <mat-label>Toux sèche ?</mat-label>
+              </td>
+              <td>
+                <mat-checkbox class="mcheck" formControlName="signeSymptome1" placeholder=""></mat-checkbox>
+              </td>
+  
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                <mat-form-field>
+                  <mat-label>Durée (en jours)</mat-label>
+                  <input type="number" matInput placeholder="" formControlName="duree1">
+                </mat-form-field>
+              </td>
+            </tr>
+  
+            <tr>
+              <td>
+                <mat-label>Fièvre ?</mat-label>
+              </td>
+              <td>
+                <mat-checkbox class="mcheck" formControlName="signeSymptome2" placeholder=""></mat-checkbox>
+              </td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                &nbsp;
+              </td>
+  
+              <td>
+                <mat-form-field>
+                  <mat-label>Durée (en jours)</mat-label>
+                  <input type="number" matInput placeholder="" formControlName="duree2">
+                </mat-form-field>
+              </td>
+            </tr>
+  
+            <tr>
+              <td>
+                <mat-label>Difficulté respiratoire ?</mat-label>
+              </td>
+              <td>
+                <mat-checkbox class="mcheck" formControlName="signeSymptome3" placeholder=""></mat-checkbox>
+              </td>
+  
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                <mat-form-field>
+                  <mat-label>Durée (en jours)</mat-label>
+                  <input type="number" matInput placeholder="" formControlName="duree3">
+                </mat-form-field>
+              </td>
+            </tr>
+  
+            <tr>
+              <td>
+                <mat-label>Mal de gorge ?</mat-label>
+              </td>
+              <td>
+                <mat-checkbox class="mcheck" formControlName="signeSymptome4" placeholder=""></mat-checkbox>
+              </td>
+  
+              <td>
+                &nbsp;
+              </td>
+  
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                <mat-form-field>
+                  <mat-label>Durée (en jours)</mat-label>
+                  <input type="number" matInput placeholder="" formControlName="duree4">
+                </mat-form-field>
+              </td>
+            </tr>
+          </div>
+  
+          <div class="col-sm-6">
+            <tr>
+              <td>
+                <mat-label>Diarrhée ?</mat-label>
+              </td>
+              <td>
+                <mat-checkbox class="mcheck" formControlName="signeSymptome5" placeholder=""></mat-checkbox>
+              </td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                &nbsp;
+              </td>
+  
+              <td>
+                <mat-form-field>
+                  <mat-label>Durée (en jours)</mat-label>
+                  <input type="number" matInput placeholder="" formControlName="duree5">
+                </mat-form-field>
+              </td>
+            </tr>
+  
+            <tr>
+              <td>
+                <mat-label>Myalgie ?</mat-label>
+              </td>
+              <td>
+                <mat-checkbox class="mcheck" formControlName="signeSymptome6" placeholder=""></mat-checkbox>
+              </td>
+              <td>
+                &nbsp;
+              </td>
+  
+              <td>
+                &nbsp;
+              </td>
+  
+              <td>
+                <mat-form-field>
+                  <mat-label>Durée (en jours)</mat-label>
+                  <input type="number" matInput placeholder="" formControlName="duree6">
+                </mat-form-field>
+              </td>
+            </tr>
+  
+            <tr>
+              <td>
+                <mat-label>Fatigue ?</mat-label>
+              </td>
+              <td>
+                <mat-checkbox class="mcheck" formControlName="signeSymptome7" placeholder=""></mat-checkbox>
+              </td>
+              <td>
+                &nbsp;
+              </td>
+  
+              <td>
+                &nbsp;
+              </td>
+  
+              <td>
+                <mat-form-field>
+                  <mat-label>Durée (en jours)</mat-label>
+                  <input type="number" matInput placeholder="" formControlName="duree7">
+                </mat-form-field>
+              </td>
+            </tr>
+  
+            <tr>
+              <td>
+                <mat-label>Autres signes ?</mat-label>
+              </td>
+              <td>
+                <mat-checkbox class="mcheck" type="checkbox" formControlName="signeSymptome8" placeholder="">
+                </mat-checkbox>
+              </td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                &nbsp;
+              </td>
+  
+              <td>
+                <mat-form-field>
+                  <mat-label>Durée (en jours)</mat-label>
+                  <input type="number" matInput placeholder="" formControlName="duree8">
+                </mat-form-field>
+              </td>
+            </tr>
+          </div>
+  
+          <div class="col-sm-12">
+            <tr>
+              <td>
+                <mat-form-field>
+                  <mat-label>Si Autres signes, spécifier :</mat-label>
+                  <textarea matInput formControlName="autre" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"></textarea>
+                </mat-form-field>
+              </td>
+            </tr>
+            <span style="color: #c07272;">Si l’un des symptômes est présent, le patient rentre dans le circuit
+              COVID-19</span>
+          </div>
+  
+          <div class="col-sm-12">
+            <tr>
+              <td>
+                <mat-form-field>
+                  <mat-label>Initial de l'Agent </mat-label>
+                  <input matInput placeholder="" formControlName="initialAgent" required>
+                </mat-form-field>
+              </td>
+              
+              <td>
+                <mat-form-field>
+                  <mat-label>Date:</mat-label>
+                  <input matInput [matDatepicker]="picker1"  formControlName="dateQuestionNiveau1">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </td>
+  
+            </tr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            
+          <button mat-raised-button mat-button color="warn" matStepperPrevious style="margin-right: 40px;">Retour</button>
+          <!-- <button [disabled]="!secondFormGroup.valid" mat-raised-button mat-button color="warn"
+            matStepperNext>Suivant</button> -->
+          <button [disabled]="!_firstFormGroup.valid" (click)="save(stepper)" mat-raised-button mat-button color="primary"
+          style="margin-left: 10px;">Sauvegarder</button>
+          </div>
+
+          <button [disabled]="!_firstFormGroup.valid" style="margin-left: 10px;" mat-raised-button mat-button color="warn" matStepperNext style="margin-right: 40px;">Suivant</button>
+
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4">
+            <button  (click)="onNoClick()" mat-button color="primary" style="margin-left: 10px;">Fermer</button>
+          </div>
+
+        </div>
+      </form>
+    </mat-step>
+  
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel> <span style="text-transform: uppercase;">Niveau 2: Infirmière (Signes Vitaux). 
+          </span>
+        </ng-template>
+       
+        <p>Risques et comorbidités à l’admission (Cocher tous les symptômes rapportés) </p>
+  
+        <div class="content">
+          <tr>
+            <td>
+              <mat-label>Grossesse (trimestre: ) ?</mat-label>
+            </td>
+            <td>
+              <mat-checkbox class="mcheck" formControlName="qgrosTrimestre" placeholder=""></mat-checkbox>
+            </td>
+  
+            <td>&nbsp;</td>
+            <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+  
+            <td>
+              <mat-label>Maladie cardiovasculaire, inclus l’hypertension ?</mat-label>
+            </td>
+            <td>
+                <mat-checkbox class="mcheck" formControlName="qmaladieCardHyper"></mat-checkbox>
+            </td>
+          </tr>
+  
+          <tr>
+            <td>
+              <mat-label> Diabète ?</mat-label>
+            </td>
+            <td>
+              <mat-checkbox class="mcheck" formControlName="qdiabete"></mat-checkbox>
+            </td>
+  
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+  
+            <td>              
+              <mat-label>Cirrhose ?</mat-label>
+            </td>
+  
+            <td>
+                <mat-checkbox class="mcheck" matInput formControlName="qcirrhose"></mat-checkbox>
+            </td>
+          </tr>
+  
+          <tr>
+            <td>
+              <mat-label>Maladies neurologique or neuromusculaire chroniques ?</mat-label>
+            </td>
+            <td>
+              <mat-checkbox class="mcheck" formControlName="qmaladieNeroChronique"></mat-checkbox>
+            </td>
+  
+            <td>&nbsp;</td><td>&nbsp;</td>
+  
+            <td>
+              <mat-label>Autres ? préciser: </mat-label>
+            </td>
+            <td>
+              <mat-checkbox class="mcheck" formControlName="qautrePreciser" placeholder=""></mat-checkbox>
+            </td>
+  
+          </tr>
+  
+          <tr>
+            <td>
+              <mat-label>Post-partum (&lt; 6 semaines) ?</mat-label>
+            </td>
+            <td>
+              <mat-checkbox class="mcheck" formControlName="qpostPartum"></mat-checkbox>
+            </td>
+  
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+  
+            <td>
+              <mat-label> Immunodéficience, inclus HIV ?</mat-label>
+            </td>
+            <td>
+                <mat-checkbox class="mcheck" formControlName="qimmuHiv"></mat-checkbox>
+            </td>
+          </tr>
+  
+          <tr>
+            <td>
+              <mat-label> Maladie rénale ?</mat-label>
+            </td>
+            <td>
+              <mat-checkbox class="mcheck" formControlName="qmaladieRenale"></mat-checkbox>
+            </td>
+  
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+  
+            <td>
+              <mat-label>Maladie pulmonaire chronique ?</mat-label>
+            </td>
+            <td>
+                <mat-checkbox class="mcheck" formControlName="qmaladiePulChronique"></mat-checkbox>
+            </td>
+          </tr> 
+  
+          <tr>            
+            <td>
+              <mat-label>Cancer ? </mat-label>
+            </td>
+            <td>
+              <mat-checkbox class="mcheck" formControlName="qcancer" ></mat-checkbox>
+            </td>
+          </tr>
+        </div>
+  
+        <tr>
+          <td>
+            <mat-form-field>
+              <mat-label>Initial de l’infirmière</mat-label>
+              <input matInput placeholder="" formControlName="initialPrestataireNiveau2" required>
+            </mat-form-field>
+          </td>
+  
+          <td>
+            
+            <mat-form-field>
+              <mat-label>Date:</mat-label>
+              <input matInput [matDatepicker]="picker13"  formControlName="dateQuestionNiveau2">
+              <mat-datepicker-toggle matSuffix [for]="picker13"></mat-datepicker-toggle>
+              <mat-datepicker #picker13></mat-datepicker>
+            </mat-form-field>
+          </td>
+        </tr>
+        <div class="row">
+          <div class="col-sm-6"></div>
+          <button mat-raised-button mat-button color="warn" matStepperPrevious >Retour</button>
+          <button style="margin-left: 10px;" [disabled]="!secondFormGroup.valid" (click)="save(stepper)" mat-raised-button mat-button color="primary">Sauvegarder</button>
+          <button style="margin-left: 10px;" [disabled]="!secondFormGroup.valid" mat-raised-button mat-button color="warn" matStepperNext >Suivant</button>
+  
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">
+            <button  (click)="onNoClick()" mat-button color="primary" style="margin-left: 10px;">Fermer</button>
+          </div>
+        </div>
+    
+      </form>
+  
+    </mat-step>
+  
+    <!--Third Form-->
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel> <span style="text-transform: uppercase;">Niveau 3: Médecin Screening COVID-19</span>
+        </ng-template>
+  
+        <div>
+          <mat-form-field>
+            <mat-label>Selectionner Cas: </mat-label>
+            <mat-select [(value)]='selected' (selectionChange)="onChange($event.value)">
+              <mat-option value="Aucun">Aucun</mat-option>
+              <mat-option value="Référer à domicile">Cas léger</mat-option>
+              <mat-option value="Référer au CSDT">Cas modéré</mat-option>
+              <mat-option value="Référer automatiquement au MSPP">Cas sévère</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <tr *ngIf='position == 1'>
+            <td>
+              <mat-label> Sat. O2 > 95 ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="legerSao"></mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Freq. resp &lt; 25 ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="legerFreqRep" ></mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Freq. Card. &lt; 120 ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="legerFreCard" >
+              </mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Karnofsky > 60 ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="legerKarnofsky" >
+              </mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Stat. mental Normal ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="legerStatMental">
+              </mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Co-morb. Absent ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="legerCoMorb">
+              </mat-checkbox>
+            </td>
+          </tr>
+  
+  
+          <tr *ngIf='position == 2'>
+            <td>
+              <mat-label> Sat. O2 94-90 ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="modereSao"></mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Freq. resp &lt;25 ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="modereFreqRep" ></mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Freq. Card. &lt; 120?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="modereFreCard" >
+              </mat-checkbox>
+            </td>
+  
+            
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Karnofsky = 60 ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="modereKarnofsky" >
+              </mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Stat. mental Normal ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="modereStatMental">
+              </mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Co-morb. Présent ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="modereCoMorb">
+              </mat-checkbox>
+            </td>
+          </tr>
+  
+          <tr *ngIf='position == 3'>
+            <td>
+              <mat-label> Sat. O2 &lt; 90 ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="severeSao"></mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Freq. resp > 25 ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="severeFreqRep" ></mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Freq. Card. >= 120?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="severeFreCard" >
+              </mat-checkbox>
+            </td>
+  
+            
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Karnofsky &lt; 60 ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="severeKarnofsky" >
+              </mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Stat. mental Altéré ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="severeStatMental">
+              </mat-checkbox>
+            </td>
+  
+            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+  
+            <td>
+              <mat-label>Co-morb. Présent ?</mat-label>
+              <mat-checkbox class="mcheck" type="checkbox" formControlName="severeCoMorb">
+              </mat-checkbox>
+            </td>
+          </tr>
+  
+          <hr>
+          <p style="margin-bottom: 40px; color: #e08f8f;"> Conduite à tenir: {{selected}}</p>
+        </div>
+        <tr>
+          <td>
+            <mat-label>Résultat test de confirmation : Statut Covid-19 ?</mat-label>
+            <mat-checkbox class="mcheck" formControlName="screeningResult" placeholder=""></mat-checkbox>
+          </td>
+  
+          <td>
+            <mat-label>Référencer au MSPP ? </mat-label>
+            <mat-checkbox class="mcheck" matInput formControlName="refMspp" placeholder=""></mat-checkbox>
+          </td>
+        </tr>
+  
+        <tr>
+          <td>
+            <mat-form-field>
+              <mat-label>Date Ref</mat-label>
+              <input matInput placeholder="" formControlName="refMsppDate" required>
+            </mat-form-field>
+          </td>
+  
+        </tr>
+  
+        <tr>
+          <td>
+            <mat-form-field>
+              <mat-label>Initial du Medecin</mat-label>
+              <input matInput formControlName="cardNoMedecin" required>
+            </mat-form-field>
+          </td>
+  
+          <td>
+            <mat-form-field>
+              <mat-label>Date:</mat-label>
+              <input matInput [matDatepicker]="picker15"  formControlName="screeningDate">
+              <mat-datepicker-toggle matSuffix [for]="picker15"></mat-datepicker-toggle>
+              <mat-datepicker #picker15></mat-datepicker>
+            </mat-form-field>
+          </td>
+        </tr>
+  
+        <div class="row">
+          <div class="col-sm-4">
+            <button mat-raised-button mat-button color="warn" matStepperPrevious style="margin-right: 40px;">Retour</button>
+            <button [disabled]="!thirdFormGroup.valid" (click)="save(stepper)" mat-raised-button mat-button
+            color="primary">Sauvegarder</button>
+          </div>
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4">
+            <button  (click)="onNoClick()" mat-button color="primary" style="margin-left: 10px;">Fermer</button>
+          </div>
+
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>

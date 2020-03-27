@@ -1,0 +1,22 @@
+mat-form-field{
+    margin-right: 30px !important;;
+}
+
+mat-label{
+    margin-top: 50px;
+    margin-right: 10px;
+}
+
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+
+::ng-deep mat-checkbox.yourcheckbox .mat-checkbox-frame{
+    margin-left: 5px;
+    margin-right: 5px;
+ }
+
+ .mcheck {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
